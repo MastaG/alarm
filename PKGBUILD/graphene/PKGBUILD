@@ -35,9 +35,12 @@ prepare() {
 }
 
 build() {
+  if [ "${arch}" == "armv7h" ]; then
+    EXTRAFLAGS="-D arm_neon=false"
+  fi
   arch-meson graphene build \
     -D gtk_doc=true \
-    -D arm_neon=false \
+    $EXTRAFLAGS \
     -D installed_tests=false
   meson compile -C build
 }
